@@ -21,7 +21,8 @@ function App() {
 				format: "geojson",
 				starttime: startDate,
 				eventtype: "earthquake",
-				// ? are we limiting the search to a specific location? if so, we may want to add the following parameters as well: minlatitude, minlongitude,maxlatitude,maxlongitude
+				// TODO:ask client are we limiting the search to a specific location? if so, we may want to add the following parameters as well: minlatitude, minlongitude,maxlatitude,maxlongitude
+				//map api takes radius
 			},
 		})
 		.then(response=> {
