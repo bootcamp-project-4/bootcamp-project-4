@@ -7,55 +7,31 @@ import axios from "axios";
 
 
 function App() {
-	const [earthquakes, setEarthquakes] = useState([]);
+	const [earthquakesData, setEarthquakesData] = useState([]);
 
-	const startDate = "2022-05-06" //start tracking from project start date
+	const startDate = "2022-05-05"; //start tracking from project start date
 
-	//TODO: move function to separate module and import
-	function getEqDataFromApi(){
+	//function to get earthquake data from USGS API.
+	//startTime argument passed to the function, limits data to events on or after the specified start time
+	function getEqDataFromApi(startTime){
 		axios({
 			url: "https://earthquake.usgs.gov/fdsnws/event/1/query",
 			method: "GET",
 			dataResponse: "json",
 			params: {
 				format: "geojson",
-				starttime: startDate,
+				starttime: startTime,
 				eventtype: "earthquake",
-				// TODO:ask client are we limiting the search to a specific location? if so, we may want to add the following parameters as well: minlatitude, minlongitude,maxlatitude,maxlongitude
-				//map api takes radius
+				minmagnitude:0,
 			},
-		})
-		.then(response=> {
+		}).then((response) => {
 			const listOfEarthquakes = response.data.features;
-			console.log({listOfEarthquakes});
-			// ? need to get the following properties for each earthquake object in the array. any more?
-				//geometry.coordinates[0] - longitude
-				//geometry.coordinates[1] - latitude
-				//properties.mag - magnitude
-				//properties.ids - event id
-				//properties.place - location of event
-				//properties.time - date and time of event in numerical format. maybe convert to Date using new Date()
-				//properties.tsunami - for stretch goals
-			const selectedProperties = listOfEarthquakes.map(earthquake => {
-				return ({
-					"longitude":earthquake.geometry.coordinates[0],
-					"latitude":earthquake.geometry.coordinates[1],
-					"magnitude":earthquake.properties.mag,
-					"id":earthquake.properties.id,
-					"location": earthquake.properties.place,
-					"date": new Date(earthquake.properties.time),
-					"tsunami": earthquake.properties.tsunami
-				})
-			})
-			setEarthquakes(selectedProperties);
-			console.log({earthquakes});
-		})
-		.catch(err=>console.log(err));
+			setEarthquakesData(listOfEarthquakes);
+		}).catch((err) => console.log(err));
 	}
 
 	useEffect(()=>{
-		getEqDataFromApi();
-		console.log(earthquakes);
+		getEqDataFromApi(startDate);
 	},[]);
 
 	return (
