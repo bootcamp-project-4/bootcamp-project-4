@@ -23,6 +23,7 @@ function App() {
 				starttime: startTime,
 				eventtype: "earthquake",
 				minmagnitude:0,
+				// orderby:"magnitude",
 			},
 		}).then((response) => {
 			const listOfEarthquakes = response.data.features;
@@ -33,6 +34,8 @@ function App() {
 	useEffect(()=>{
 		getEqDataFromApi(startDate);
 	},[]);
+
+	console.log(earthquakesData);
 
 	return (
 		<div className="App">
