@@ -68,39 +68,6 @@ function App() {
 			.catch((err) => console.log(err));
 	};
 
-	useEffect(() => {
-		const fetchData = async () => {
-			function sleep(ms) {
-				return new Promise((resolve) => setTimeout(resolve, ms));
-			}
-
-			await loadDataToFirebase(earthquakesData);
-			await sleep(1000);
-			await getDataFromFirebase();
-			// Error 1: API loading indicator
-			// When page loads, isLoading state value = true
-			// Once the functions above are done running (3 promises), toggle isLoading state = false
-			// When this happens, conditionally render "loading" modal/element
-
-			const allTotalCount = getTotals(earthquakesData);
-			setTotalCount(allTotalCount);
-		};
-		fetchData();
-	}, [earthquakesData]);
-
-	useEffect(() => {
-		getHeroesSummary();
-	}, [totalCount, todaysCount]);
-
-	useEffect(() => {
-		const todayTotalCount = getTotals(todaysEarthquakeData);
-		setTodaysCount(todayTotalCount);
-	}, [todaysEarthquakeData]);
-
-	useEffect(() => {
-		getEqDataFromApi(startDate);
-	}, []);
-
 	// Firebase Database
 	const loadDataToFirebase = async (earthquakesData) => {
 		const database = getDatabase(firebase);
@@ -111,32 +78,6 @@ function App() {
 		// Wrap the "set" method in a try...catch code block
 		// If the try succeeds (i.e. sets the earthquake data at the dbRef), do nothing
 		// If the try fails, capture the error, and alert the user indicating that the firebase "set" failed
-	};
-
-	const getHeroesSummary = () => {
-		const summary = [
-			{
-				name: "general geology-teacher",
-				totalIncidents: totalCount.geoTeacher,
-				incidentsOver24Hrs: todaysCount.geoTeacher,
-			},
-			{
-				name: "rich moral",
-				totalIncidents: totalCount.richMoral,
-				incidentsOver24Hrs: todaysCount.richMoral,
-			},
-			{
-				name: "stronggoode",
-				totalIncidents: totalCount.strongGoode,
-				incidentsOver24Hrs: todaysCount.strongGoode,
-			},
-			{
-				name: "all",
-				totalIncidents: totalCount.allTeam,
-				incidentsOver24Hrs: todaysCount.allTeam,
-			},
-		];
-		setHeroesSummary(summary);
 	};
 
 	const getDataFromFirebase = async () => {
@@ -150,23 +91,23 @@ function App() {
 
 		// Getting Data from Firebase
 		get(dbRef).then((snapshot) => {
-			const firebaseData = snapshot.val();
-			const copyOfFirebaseData = [...firebaseData];
+		const firebaseData = snapshot.val();
+		const copyOfFirebaseData = [...firebaseData];
 
-			// Filtering through the Data
-			const todaysEarthquakeData = copyOfFirebaseData.filter(
-				(incident) => {
-					// Converting the time
-					let rawDate = new Date(incident.properties.time);
-					let convertedDate = rawDate.toLocaleDateString("en-US");
+		// Filtering through the Data to get today's incidents
+		//TODO: maybe update variable name below, since the state variable also has this name
+		const todaysEarthquakeData = copyOfFirebaseData.filter((incident) => {
+			// Converting the time from milliseconds to yyyy-mm-dd
+			let rawDate = new Date(incident.properties.time);
+			let convertedDate = rawDate.toLocaleDateString("en-US");
 
-					return userDate === convertedDate;
-				}
-			);
-			setTodaysEarthquakeData(todaysEarthquakeData);
+			return userDate === convertedDate;
+		});
+		setTodaysEarthquakeData(todaysEarthquakeData);
 		});
 	};
 
+	//TODO: maybe consider changing parameter name
 	const getTotals = (earthquakesData) => {
 		const copyOfEarthQuakeData = [...earthquakesData];
 
@@ -207,10 +148,70 @@ function App() {
 		return heroTotals;
 	};
 
+	const getHeroesSummary = () => {
+		const summary = [
+			{
+				name: "general geology-teacher",
+				totalIncidents: totalCount.geoTeacher,
+				incidentsOver24Hrs: todaysCount.geoTeacher,
+			},
+			{
+				name: "rich moral",
+				totalIncidents: totalCount.richMoral,
+				incidentsOver24Hrs: todaysCount.richMoral,
+			},
+			{
+				name: "stronggoode",
+				totalIncidents: totalCount.strongGoode,
+				incidentsOver24Hrs: todaysCount.strongGoode,
+			},
+			{
+				name: "all",
+				totalIncidents: totalCount.allTeam,
+				incidentsOver24Hrs: todaysCount.allTeam,
+			},
+		];
+		setHeroesSummary(summary);
+	};
+
+	//on page load, the code in this useEffect is run
+	//first step is to get data from APT
+	useEffect(() => {
+		getEqDataFromApi(startDate); 
+    }, []);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			function sleep(ms) {
+				return new Promise((resolve) => setTimeout(resolve, ms));
+			}
+
+			await loadDataToFirebase(earthquakesData);
+			await sleep(1000);
+			await getDataFromFirebase();
+			// Error 1: API loading indicator
+			// When page loads, isLoading state value = true
+			// Once the functions above are done running (3 promises), toggle isLoading state = false
+			// When this happens, conditionally render "loading" modal/element
+
+			const allTotalCount = getTotals(earthquakesData);
+			setTotalCount(allTotalCount);
+		};
+		fetchData();
+	}, [earthquakesData]);
+
+	useEffect(() => {
+		const todayTotalCount = getTotals(todaysEarthquakeData);
+		setTodaysCount(todayTotalCount);
+    }, [todaysEarthquakeData]);
+
+	useEffect(() => {
+		getHeroesSummary();
+	}, [totalCount, todaysCount]);
+
 	return (
 		<div className="App">
 			<h1>Hello world!</h1>
-
 			<Map earthquakesData={todaysEarthquakeData} />
 			<TotalEarthquakeDisplay heroesSummary={heroesSummary} />
 			<TodaysEarthquakeDisplay heroesSummary={heroesSummary} />
