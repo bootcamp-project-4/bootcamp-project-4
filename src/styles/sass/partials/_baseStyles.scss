@@ -5,10 +5,12 @@
 
 html {
 	font-size: 125%;
+	height: 100%;
 }
 
 body {
 	margin: 0 auto;
+	height: 100%;
 }
 
 ul {
@@ -19,6 +21,126 @@ a {
 	text-decoration: none;
 }
 
+.loader-container {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: $clr-black;
+	min-height: 100vh;
+	justify-content: center;
+
+	.loader {
+		border: 16px solid #f3f3f3; /* Light grey */
+		border-top: 16px solid $clr-purple; /* Blue */
+		border-radius: 50%;
+		width: 120px;
+		height: 120px;
+		animation: spin 2s linear infinite;
+		-webkit-animation: spin 2s linear infinite;
+		-moz-animation: spin 2s linear infinite;
+	}
+
+	p {
+		margin: 40px 0;
+		color: $clr-white;
+	}
+
+	.fade-in {
+		animation: fadeIn ease 8s;
+		-webkit-animation: fadeIn ease 8s;
+		-moz-animation: fadeIn ease 8s;
+	}
+	.fade-out {
+		animation: fadeOut ease 10s;
+		-webkit-animation: fadeOut ease 10s;
+		-moz-animation: fadeOut ease 10s;
+	}
+
+	// loader animations
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	@-webkit-keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	@-moz-keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	// text animation
+	@keyframes fadeIn {
+		0% {
+			opacity: 0.2;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
+	@-webkit-keyframes fadeIn {
+		0% {
+			opacity: 0.2;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
+	@-moz-keyframes fadeIn {
+		0% {
+			opacity: 0.2;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
+	@keyframes fadeOut {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0.2;
+		}
+	}
+
+	@-webkit-keyframes fadeOut {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0.2;
+		}
+	}
+
+	@-moz-keyframes fadeOut {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0.2;
+		}
+	}
+}
+
 .wrapper {
 	max-width: 1260px;
 	width: 95%;
@@ -26,49 +148,49 @@ a {
 }
 
 img {
-    display:block;
-    height:100%;
+	display: block;
+	height: 100%;
 }
 
 .teal-background {
-    background-color: $clr-teal;
+	background-color: $clr-teal;
 }
 
 .purple-background {
-    background-color: $clr-purple;
+	background-color: $clr-purple;
 }
 
 .blue-background {
-    background-color: $clr-blue;
+	background-color: $clr-blue;
 }
 
 .dark-purple-background {
-    background-color: $clr-dark-purple;
+	background-color: $clr-dark-purple;
 }
 
 .btn {
-    font-family: $ff-secondary;
-    font-size: $fs-200;
-    font-weight: $fw-bold;
-    display: block;
-    color: white;
-    text-transform: uppercase;
-    border: 2px solid $clr-white;
-    width: 300px;
-    margin: 0 auto;
-    padding: 20px;
+	font-family: $ff-secondary;
+	font-size: $fs-200;
+	font-weight: $fw-bold;
+	display: block;
+	color: white;
+	text-transform: uppercase;
+	border: 2px solid $clr-white;
+	width: 300px;
+	margin: 0 auto;
+	padding: 20px;
 
-    &:hover,
-    &:focus {
-        color: $clr-teal;
-        border: 2px solid $clr-teal;
-    }
+	&:hover,
+	&:focus {
+		color: $clr-teal;
+		border: 2px solid $clr-teal;
+	}
 }
 
 footer {
 	color: $clr-white;
-	margin-top: 150px;
-    padding-bottom: 100px;
+	margin-top: 100px;
+	padding-bottom: 15px;
 
 	a {
 		color: inherit;

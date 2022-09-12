@@ -2,6 +2,11 @@
 	background-color: $clr-black;
 	text-align: center;
 	color: $clr-white;
+	min-height: 100vh;
+
+	span {
+		margin-bottom: 15px;
+	}
 
 	img {
 		width: 30%;
@@ -31,18 +36,21 @@
 	p {
 		font-family: $ff-secondary;
 		font-size: $fs-500;
-		padding: 33px 0;
 		line-height: $lh-100;
+		max-width: 960px;
+		margin: 33px auto;
+		hyphens: auto;
 	}
 
 	nav {
 		text-align: left;
 		padding-top: 20px;
-		
+		position: relative;
+		left: 24px;
+
 		a {
 			font-size: $fs-600;
 			color: $clr-white;
-
 			&:hover,
 			&:focus {
 				color: $clr-teal;
@@ -52,30 +60,19 @@
 
 	h3 {
 		font-size: $fs-550;
-		position: relative;
-
-		&:after {
-			content: "";
-			display: block;
-			margin: 0 auto;
-			width: 300px;
-			height: 1px;
-			background-color: $clr-white;
-			position: absolute;
-			left: 0;
-			right: 0;
-			bottom: -10px;
-		}
 	}
 
 	ul {
 		font-family: $ff-secondary;
-		padding: 25px 0;
+		max-width: 620px;
+		margin: 33px auto 43px auto;
 
 		li {
 			font-family: $ff-secondary;
 			font-size: $fs-500;
-			line-height: $lh-200;
+			line-height: $lh-100;
+			margin: 0 0 33px 0;
+			hyphens: auto;
 		}
 	}
 }

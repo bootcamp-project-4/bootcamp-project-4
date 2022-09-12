@@ -1,54 +1,55 @@
 .hero-total {
-    display:flex;
-    height: 100px;
-    width:200px;  
-    align-items: center;
-    justify-content: space-around;
+	display: flex;
+	height: 100px;
+	width: 200px;
+	align-items: center;
+	justify-content: space-around;
 
-    &>div{
-        height:100%;
-    }
+	& > div {
+		height: 100%;
+	}
 
-    margin:10px 0;
+	margin: 10px 0;
 }
 
 .legend {
-    width: 15px;
+	width: 15px;
 }
 
 .total-display {
-    h2 {
-        background-color: $clr-black;
-        color: $clr-white;
-        text-align: center;
-        padding: 30px;
-        font-weight: normal;
+	h2 {
+		background-color: $clr-black;
+		color: $clr-white;
+		text-align: center;
+		padding: 30px;
+		font-weight: normal;
 
-        span {
-            display: block;
-            font-size: $fs-400;
-            padding-top: 5px;
-        }
-    }
+		span {
+			display: block;
+			font-size: $fs-400;
+			padding-top: 5px;
+		}
+	}
 
-    ul {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+	ul {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 
-        li {
-            &:hover,
-            &:focus {
-                background-color: $clr-light-grey;
-            }
-        }
+		li {
+			width: 100%;
+			&:hover,
+			&:focus {
+				background-color: $clr-light-grey;
+			}
+		}
 
-        a {
-            color: $clr-black;
-        }
-    }
+		a {
+			color: $clr-black;
+		}
+	}
 
-    p {
-        width: 40px;
-    }
+	p {
+		width: 40px;
+	}
 }
